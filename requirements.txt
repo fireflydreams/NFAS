@@ -1,0 +1,5 @@
+altair==5.0.1
+numpy==1.24.3
+pandas==2.0.2
+streamlit==1.23.1
+ag_grid==0.3.4.post3
