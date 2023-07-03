@@ -3,7 +3,7 @@ import pandas as pd
 import altair as alt
 import streamlit as st
 
-from st_aggrid import GridOptionsBuilder, AgGrid, ColumnsAutoSizeMode
+from altair import *
 
 st.set_page_config(layout='wide')
 st.sidebar.success('Select a page above.')
@@ -25,7 +25,6 @@ gender = st.sidebar.multiselect("Choose class(es)", classes, default=['All'])
 trad = st.sidebar.multiselect("Choose Traditional or Compound", bow, default=['All'])
 
 sight = st.sidebar.multiselect("Choose Instinctive or Sighted", instinct, default=['All'])
-
 
 df = pd.concat(pd.read_excel('NFAS Results.xlsx', sheet_name=None), ignore_index=True)
 
@@ -122,8 +121,10 @@ else:
             filtered = selected_2[selected_2["Instinct"] == i]
             final = pd.concat([final, filtered])
 
-    class_counts = final.groupby(['Year', 'Style', 'Class']).size().reset_index(name='count')
-    class_counts['combined'] = class_counts['Style'] + ' ' + class_counts['Class']
+    class_counts = final.groupby(['Champs', 'Year', 'Style', 'Class']).size().reset_index(name='count')
+    class_counts['combined'] = class_counts['Champs'] + ' ' + class_counts['Style'] + ' ' + class_counts['Class']
+    class_counts['combined1'] = class_counts['Style'] + ' ' + class_counts['Class']
+    class_counts = class_counts.sort_values(by=['Champs', 'Year'])
 
     st.subheader('Class and Style Popularity')
     st.markdown("""The below chart is very confusing to look at unless you filter it with filters to the left 👈. It is
@@ -133,6 +134,21 @@ else:
             x=alt.X('Year:N'),
             y=alt.Y('count', title='Entrants'),
             color=alt.Color('combined'),
+        )
+    )
+    st.altair_chart(chart, use_container_width=True)
+
+    yearly_champs_attendance = df.groupby(['Year', 'Champs']).size().reset_index(name='total entrants')
+    class_counts = class_counts.merge(yearly_champs_attendance, how='left', on=['Year', 'Champs'])
+    class_counts['percent_entrants'] = (class_counts['count'] / class_counts['total entrants'])*100
+
+    st.header("Percentage Entrants")
+    chart = (
+        alt.Chart(class_counts).mark_bar().encode(
+            x=alt.X('Year:N'),
+            xOffset='Champs',
+            y=alt.Y('percent_entrants', title='Entrants'),
+            color=alt.Color('combined1')
         )
     )
     st.altair_chart(chart, use_container_width=True)
@@ -165,13 +181,19 @@ st.header("Percent attendance Compound vs Traditional")
 chart = (
     alt.Chart(df_traditional).mark_line(point=True).encode(
         x=alt.X('Year:N'),
-        y=alt.Y('percent_attendance', title='Entrants'),
+        y=alt.Y('percent_attendance', title='Entrants percent'),
         color=alt.Color('Type'),
     )
 )
 st.altair_chart(chart, use_container_width=True)
 
-st.markdown("""Now having a look at the """)
+st.markdown("""Now having a look at the change in attendance percentage of "Traditional"* vs Compound bows, we can see 
+            that the popularity of compounds is waining. Does this also mean popularity of sighted classes is 
+            waining? For this I've struggled to categorize crossbows. For now they're in with compound. Despite the 
+            NFAS does not allow compound crossbows, they still do not require you to hold a significant weight on your
+            fingers, just hold the crossbow up (dependant on physical weight this can be a feat in itself!). This is the
+            most similar to compound bows where the let off allows you to (generally speaking) draw heavier draw weights
+            than the equivalent traditional bow.""")
 
 df_sight = df[['Year', 'Instinct', 'Archer']].copy()
 
@@ -182,8 +204,17 @@ df_sight['percent_attendance'] = (df_sight['Archer_x']/df_sight['Archer_y'])*100
 chart = (
     alt.Chart(df_sight).mark_line(point=True).encode(
         x=alt.X('Year:N'),
-        y=alt.Y('percent_attendance', title='Entrants'),
+        y=alt.Y('percent_attendance', title='Entrants percent'),
         color=alt.Color('Instinct'),
     )
 )
 st.altair_chart(chart, use_container_width=True)
+
+st.markdown("""Seemingly the popularity of sighted vs instinctive (again possibly not the best word as people gap-shoot 
+            but the best descriptor I could come up with.) is not dropping as fast as the popularity of Compounds is 
+            dropping. This of course is to do with the fact some compounds are unsighted (Bowhunter) and some 
+            "traditional" are sighted (Freestyle).""")
+
+st.markdown("""*I've used the term traditional as I cannot think of a better descriptor for the type of bow, despite 
+            many being used are olympic style recurves, or in the case of Freestyle, can have a sight.""")
+
