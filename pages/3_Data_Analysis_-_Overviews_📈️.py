@@ -30,7 +30,8 @@ gb.configure_side_bar()
 gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc='sum', editable=True)
 gridOptions1 = gb.build()
 st.caption('Number of Styles per year')
-AgGrid(styles_per_year, gridOptions=gridOptions1)
+AgGrid(styles_per_year, gridOptions=gridOptions1, columns_auto_size_mode=ColumnsAutoSizeMode.NO_AUTOSIZE,
+       allow_unsafe_jscode=True)
 
 st.markdown("""This may not be accurate, however I have made the assumption that the first year a style appears in the 
             results is the year it was added.""")
