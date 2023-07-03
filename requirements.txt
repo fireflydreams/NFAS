@@ -1,5 +1,7 @@
 altair==5.0.1
-numpy==1.24.3
-pandas==2.0.2
-streamlit==1.23.1
+numpy==1.25.0
+pandas==2.0.3
+streamlit==1.24.0
+folium==0.14.0
+plotly==5.15.0
 ag_grid==0.3.4.post3
