@@ -4,4 +4,4 @@ pandas==2.0.3
 streamlit==1.24.0
 folium==0.14.0
 plotly==5.15.0
-ag_grid==0.3.4.post3
+streamlit-aggrid==0.3.3
