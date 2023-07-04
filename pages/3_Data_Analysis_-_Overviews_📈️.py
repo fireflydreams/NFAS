@@ -23,6 +23,7 @@ styles_per_year.loc[styles_per_year.Year == 2007, "New Styles"] = 'PV'
 styles_per_year.loc[styles_per_year.Year == 2018, "New Styles"] = 'TB'
 styles_per_year.loc[styles_per_year.Year == 2022, "New Styles"] = 'TD'
 styles_per_year.loc[styles_per_year.Year == 2023, "New Styles"] = 'TXB'
+styles_per_year = styles_per_year.astype(str)
 
 gb = GridOptionsBuilder.from_dataframe(styles_per_year)
 gb.configure_pagination(enabled=True, paginationAutoPageSize=False, paginationPageSize=10)
@@ -30,8 +31,8 @@ gb.configure_side_bar()
 gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc='sum', editable=True)
 gridOptions1 = gb.build()
 st.caption('Number of Styles per year')
-AgGrid(styles_per_year, gridOptions=gridOptions1, columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
-       allow_unsafe_jscode=True)
+AgGrid(styles_per_year, gridOptions=gridOptions1, columns_auto_size_mode=ColumnsAutoSizeMode.NO_AUTOSIZE,
+       allow_unsafe_jscode=Truee)
 
 st.markdown("""This may not be accurate, however I have made the assumption that the first year a style appears in the 
             results is the year it was added.""")
