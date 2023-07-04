@@ -23,7 +23,6 @@ styles_per_year.loc[styles_per_year.Year == 2007, "New Styles"] = 'PV'
 styles_per_year.loc[styles_per_year.Year == 2018, "New Styles"] = 'TB'
 styles_per_year.loc[styles_per_year.Year == 2022, "New Styles"] = 'TD'
 styles_per_year.loc[styles_per_year.Year == 2023, "New Styles"] = 'TXB'
-styles_per_year = styles_per_year.astype(str)
 
 gb = GridOptionsBuilder.from_dataframe(styles_per_year)
 gb.configure_pagination(enabled=True, paginationAutoPageSize=False, paginationPageSize=10)
