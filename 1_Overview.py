@@ -19,8 +19,8 @@ st.markdown("""Before we dive into the data, a quick preface to this. Anyone not
             all under x age classes) have been removed. This is due to the wildly varying results that were seen on 
             these, and the under subscription to them.""")
 
-st.markdown("""The questions that I posed to the data are:
-Overview
+st.markdown("""The questions that I posed to the data are:""")
+st.markdown("""Overview
 - How have styles evolved over the years?
 - What has attendance looked like at both the 3D Champs and the Nationals?
 - How many clubs are typically represented at each event?
@@ -28,4 +28,13 @@ Overview
 Breakowns
 - How has the popularity of classes & styles changed over the years?
 - How has the popularity of Compounds vs Traditional bows changed over the years?
-- How has the popularity of Instinctive vs Sighted changed over the years?""")
+- How has the popularity of Instinctive vs Sighted changed over the years?
+
+Scores
+- What is the max score by class & style over the years?
+- What is the average score per target by class and style over the years?
+- Do any classes and styles show significant 'powercreep'?
+- What scores show as outliers?
+
+Champs Map
+- Where are the most comps held? (heatmap and pins)""")
