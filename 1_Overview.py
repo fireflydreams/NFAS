@@ -19,6 +19,8 @@ st.markdown("""Before we dive into the data, a quick preface to this. Anyone not
             all under x age classes) have been removed. This is due to the wildly varying results that were seen on 
             these, and the under subscription to them.""")
 
+st.subheader("""Questions""")
+
 st.markdown("""The questions that I posed to the data are:""")
 st.markdown("""Overview
 - How have styles evolved over the years?
